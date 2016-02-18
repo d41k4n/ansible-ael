@@ -1,0 +1,11 @@
+---
+# Sensu playbook
+  - hosts: sensu_masters
+    vars:
+      sensu_master: true
+      ansible_distribution: Ubuntu
+      dynamic_data_store: ~/ansible/tmp
+      rabbitmq_server: true
+      redis_server: true
+    roles:
+      - ansible-sensu

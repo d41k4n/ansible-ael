@@ -1,0 +1,29 @@
+# This is the default ansible 'hosts' file.
+#
+# It should live in /etc/ansible/hosts
+#
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+[rancherserver]
+rancherserver ansible_ssh_host=10.0.0.213
+
+[ranchernodes]
+ranchernode1 ansible_ssh_host=10.0.0.215
+ranchernode2 ansible_ssh_host=10.0.0.220
+
+[sensu_masters]
+ranchernode2 ansible_ssh_host=10.0.0.220
+
+[redis_servers]
+ranchernode2 ansible_ssh_host=10.0.0.220
+
+[rabbitmq_servers]
+ranchernode2 ansible_ssh_host=10.0.0.220
+
+[rancher:children]
+rancherserver
+ranchernodes
