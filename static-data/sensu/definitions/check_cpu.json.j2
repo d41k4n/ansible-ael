@@ -1,0 +1,11 @@
+{
+  "checks": {
+    "check-cpu": {
+      "command": "{{ sensu_config_path }}/plugins/check_cpu.sh",
+      "subscribers": [
+        "sensu_masters",
+        "sensu_clients"
+      ],
+      "interval": 10    }
+  }
+}

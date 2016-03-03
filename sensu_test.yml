@@ -1,11 +1,63 @@
 ---
-# Sensu playbook
+
+# Installs a distributed Sensu stack
+#
+# Uses the following host groups for distribution of the components:
+#
+# - sensu_masters
+# - sensu_clients
+# - redis_servers
+# - rabbitmq_servers
+#
+# Execute with "ansible-playbook -u <login-user> -K sensu_test.yml"
+#
+# Requires the following packages installed on the hosts:
+# - ssh
+# - python (or python-minimal)
+# - sysstat (needed for the cpu check by the client)
+
+# Deploys the Redis server on host group "redis_servers"
+  - hosts: redis_servers
+    become: yes
+    vars:
+      sensu_master: false
+      ansible_distribution: Ubuntu
+      dynamic_data_store: dynamic-data
+      static_data_store: static-data
+      redis_server: true
+    roles:
+      - ansible-sensu
+
+# Deploys the RabbitMQ server on host group "rabbitmq_servers"
+  - hosts: redis_servers
+    become: yes
+    vars:
+      sensu_master: false
+      ansible_distribution: Ubuntu
+      dynamic_data_store: dynamic-data
+      static_data_store: static-data
+      rabbitmq_server: true
+    roles:
+      - ansible-sensu
+
+# Deploys the Sensu server, API and dashboard on host group "sensu_masters"
   - hosts: sensu_masters
+    become: yes
     vars:
       sensu_master: true
+      sensu_include_dashboard: true
       ansible_distribution: Ubuntu
-      dynamic_data_store: ~/ansible/tmp
-      rabbitmq_server: true
-      redis_server: true
+      dynamic_data_store: dynamic-data
+      static_data_store: static-data
+    roles:
+      - ansible-sensu
+
+# Deploys the Sensu client on host group "sensu_clients"
+  - hosts: sensu_clients
+    become: yes
+    vars:
+      ansible_distribution: Ubuntu
+      dynamic_data_store: dynamic-data
+      static_data_store: static-data
     roles:
       - ansible-sensu
