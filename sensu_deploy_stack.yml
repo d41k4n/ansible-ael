@@ -25,18 +25,10 @@
       dynamic_data_store: dynamic-data
       static_data_store: static-data
       redis_server: true
-    roles:
-      - ansible-sensu
-
-# Deploys the RabbitMQ server on host group "rabbitmq_servers"
-  - hosts: redis_servers
-    become: yes
-    vars:
-      sensu_master: false
-      ansible_distribution: Ubuntu
-      dynamic_data_store: dynamic-data
-      static_data_store: static-data
-      rabbitmq_server: true
+      sensu_remote_plugins:
+        - sensu-plugins-cpu-checks
+        - sensu-plugins-disk-checks
+        - sensu-plugins-redis
     roles:
       - ansible-sensu
 
@@ -49,15 +41,23 @@
       ansible_distribution: Ubuntu
       dynamic_data_store: dynamic-data
       static_data_store: static-data
+      sensu_remote_plugins:
+        - sensu-plugins-cpu-checks
+        - sensu-plugins-disk-checks
     roles:
       - ansible-sensu
 
-# Deploys the Sensu client on host group "sensu_clients"
-  - hosts: sensu_clients
+# Deploys the RabbitMQ server on host group "rabbitmq_servers"
+  - hosts: rabbitmq_servers
     become: yes
     vars:
+      sensu_master: false
       ansible_distribution: Ubuntu
       dynamic_data_store: dynamic-data
       static_data_store: static-data
+      rabbitmq_server: true
+      sensu_remote_plugins:
+        - sensu-plugins-cpu-checks
+        - sensu-plugins-disk-checks
     roles:
       - ansible-sensu
