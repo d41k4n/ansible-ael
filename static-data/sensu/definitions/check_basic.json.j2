@@ -1,0 +1,20 @@
+{
+  "checks": {
+    "check-cpu": {
+      "command": "{{ sensu_install_path }}/embedded/bin/check-cpu.rb",
+      "subscribers": [
+        "sensu_masters",
+        "sensu_clients"
+      ],
+      "interval": 10
+    },
+    "check-disk-usage": {
+      "command": "{{ sensu_install_path }}/embedded/bin/check-disk-usage.rb",
+      "subscribers": [
+        "sensu_masters",
+        "sensu_clients"
+      ],
+      "interval": 60
+    }
+  }
+}

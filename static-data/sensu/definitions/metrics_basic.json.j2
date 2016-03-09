@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "metrics-cpu-pcnt-usage": {
+      "type": "metric",
+      "command": "{{ sensu_install_path }}/embedded/bin/metrics-cpu-pcnt-usage.rb",
+      "subscribers": [
+        "sensu_masters",
+        "sensu_clients"
+      ],
+      "interval": 20
+    }
+  }
+}

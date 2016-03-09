@@ -1,0 +1,25 @@
+{
+  "checks": {
+    "check-redis-info": {
+      "command": "{{ sensu_install_path }}/embedded/bin/check-redis-info.rb",
+      "subscribers": [
+        "redis_servers"
+      ],
+      "interval": 60
+    },
+    "check-redis-memory": {
+        "command": "{{ sensu_install_path }}/embedded/bin/check-redis-memory.rb -w 4096 -c 8192",
+        "subscribers": [
+          "redis_servers"
+      ],
+      "interval": 60
+    },
+    "check-redis-ping": {
+        "command": "{{ sensu_install_path }}/embedded/bin/check-redis-ping.rb",
+        "subscribers": [
+          "redis_servers"
+      ],
+      "interval": 30
+    }
+  }
+}
