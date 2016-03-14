@@ -25,12 +25,8 @@
       dynamic_data_store: dynamic-data
       static_data_store: static-data
       redis_server: true
-      sensu_remote_plugins:
-        - sensu-plugins-cpu-checks
-        - sensu-plugins-disk-checks
-        - sensu-plugins-redis
     roles:
-      - ansible-sensu
+      - { role: ansible-sensu, tags: redis_server }
 
 # Deploys the Sensu server, API and dashboard on host group "sensu_masters"
   - hosts: sensu_masters
@@ -44,8 +40,9 @@
       sensu_remote_plugins:
         - sensu-plugins-cpu-checks
         - sensu-plugins-disk-checks
+        - sensu-plugins-redis
     roles:
-      - ansible-sensu
+      - { role: ansible-sensu, tags: [ 'sensu_master', 'dashboard', 'plugins' ] }
 
 # Deploys the RabbitMQ server on host group "rabbitmq_servers"
   - hosts: rabbitmq_servers
@@ -56,8 +53,5 @@
       dynamic_data_store: dynamic-data
       static_data_store: static-data
       rabbitmq_server: true
-      sensu_remote_plugins:
-        - sensu-plugins-cpu-checks
-        - sensu-plugins-disk-checks
     roles:
-      - ansible-sensu
+      - { role: ansible-sensu, tags: rabbitmq_server }
