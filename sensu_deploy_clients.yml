@@ -7,5 +7,8 @@
       ansible_distribution: Ubuntu
       dynamic_data_store: dynamic-data
       static_data_store: static-data
+      sensu_remote_plugins:
+        - sensu-plugins-cpu-checks
+        - sensu-plugins-disk-checks
     roles:
-      - { role: ansible-sensu, tags: client }
+      - role: ansible-sensu
