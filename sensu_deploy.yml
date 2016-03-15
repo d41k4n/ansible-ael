@@ -9,12 +9,21 @@
 # - redis_servers
 # - rabbitmq_servers
 #
-# Execute with "ansible-playbook -u <login-user> -K sensu_test.yml"
+# Possible tags:
+#
+# - server
+# - redis
+# - rabbitmq
+# - client
+# - plugins
+# - dashboard
+#
+#
+# Execute with "ansible-playbook -u <login-user> -K sensu_test.yml --tags "tagname""
 #
 # Requires the following packages installed on the hosts:
 # - ssh
 # - python (or python-minimal)
-# - sysstat (needed for the cpu check by the client)
 
 # Deploys the Redis server on host group "redis_servers"
   - hosts: redis_servers
@@ -25,8 +34,12 @@
       dynamic_data_store: dynamic-data
       static_data_store: static-data
       redis_server: true
+      sensu_remote_plugins:
+        - sensu-plugins-cpu-checks
+        - sensu-plugins-disk-checks
+        - sensu-plugins-redis
     roles:
-      - { role: ansible-sensu, tags: redis_server }
+      - role: ansible-sensu
 
 # Deploys the Sensu server, API and dashboard on host group "sensu_masters"
   - hosts: sensu_masters
@@ -40,9 +53,8 @@
       sensu_remote_plugins:
         - sensu-plugins-cpu-checks
         - sensu-plugins-disk-checks
-        - sensu-plugins-redis
     roles:
-      - { role: ansible-sensu, tags: [ 'sensu_master', 'dashboard', 'plugins' ] }
+      - role: ansible-sensu
 
 # Deploys the RabbitMQ server on host group "rabbitmq_servers"
   - hosts: rabbitmq_servers
@@ -53,5 +65,8 @@
       dynamic_data_store: dynamic-data
       static_data_store: static-data
       rabbitmq_server: true
+      sensu_remote_plugins:
+        - sensu-plugins-cpu-checks
+        - sensu-plugins-disk-checks
     roles:
-      - { role: ansible-sensu, tags: rabbitmq_server }
+      - role: ansible-sensu
