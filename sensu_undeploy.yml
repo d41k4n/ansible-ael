@@ -1,0 +1,45 @@
+---
+
+# Installs a distributed Sensu stack
+#
+# Uses the following host groups for distribution of the components:
+#
+# - sensu_masters
+# - sensu_clients
+# - redis_servers
+# - rabbitmq_servers
+#
+# Possible tags:
+#
+# - server
+# - redis
+# - rabbitmq
+# - client
+# - plugins
+# - dashboard
+#
+#
+# Execute with "ansible-playbook -u <login-user> -K sensu_test.yml --tags "tagname""
+#
+# Requires the following packages installed on the hosts:
+# - ssh
+# - python (or python-minimal)
+
+# Undeploys everything
+  - hosts: sensu_clients:sensu_masters:rabbitmq_servers:redis_servers
+    become: yes
+    vars:
+      sensu_pkg_state: absent
+      redis_pkg_state: absent
+      rabbitmq_pkg_state: absent
+      sensu_gem_state: absent
+      sensu_plugin_gem_state: absent
+      sensu_master: false
+      redis_server: false
+      rabbitmq_server: false
+      sensu_include_dashboard: false
+      ansible_distribution: Ubuntu
+      dynamic_data_store: dynamic-data
+      static_data_store: static-data
+    roles:
+      - role: ansible-sensu
