@@ -34,6 +34,7 @@
       dynamic_data_store: dynamic-data
       static_data_store: static-data
       redis_server: true
+      sensu_client: false
       sensu_remote_plugins:
         - sensu-plugins-cpu-checks
         - sensu-plugins-disk-checks
