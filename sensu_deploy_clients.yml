@@ -10,5 +10,6 @@
       sensu_remote_plugins:
         - sensu-plugins-cpu-checks
         - sensu-plugins-disk-checks
+        - sensu-plugins-network-checks
     roles:
       - role: ansible-sensu

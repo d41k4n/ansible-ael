@@ -15,6 +15,14 @@
         "sensu_clients"
       ],
       "interval": 60
+    },
+    "check-netstat-tcp": {
+      "command": "{{ sensu_install_path }}/embedded/bin/check-netstat-tcp.rb",
+      "subscribers": [
+        "sensu_masters",
+        "sensu_clients"
+      ],
+      "interval": 30
     }
   }
 }
