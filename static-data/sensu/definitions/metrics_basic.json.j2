@@ -7,7 +7,28 @@
         "sensu_masters",
         "sensu_clients"
       ],
-      "interval": 20
+      "interval": 10,
+      "handlers": ["relay"]
+    },
+    "metrics-disk-capacity": {
+      "type": "metric",
+      "command": "{{ sensu_install_path }}/embedded/bin/metrics-disk-capacity.rb",
+      "subscribers": [
+        "sensu_masters",
+        "sensu_clients"
+      ],
+      "interval": 60,
+      "handlers": ["relay"]
+    },
+    "metrics-interface": {
+      "type": "metric",
+      "command": "{{ sensu_install_path }}/embedded/bin/metrics-interface.rb",
+      "subscribers": [
+        "sensu_masters",
+        "sensu_clients"
+      ],
+      "interval": 10,
+      "handlers": ["relay"]
     }
   }
 }
